@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  frame: one
+  pins: 1
+
+two:
+  frame: two
+  pins: 1

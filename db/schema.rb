@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_29_094347) do
+ActiveRecord::Schema.define(version: 2018_07_29_100354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "balls", force: :cascade do |t|
+    t.bigint "frame_id", null: false
+    t.integer "pins", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["frame_id"], name: "index_balls_on_frame_id"
+  end
 
   create_table "frames", force: :cascade do |t|
     t.uuid "game_id", null: false
@@ -28,5 +36,6 @@ ActiveRecord::Schema.define(version: 2018_07_29_094347) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "balls", "frames"
   add_foreign_key "frames", "games"
 end
