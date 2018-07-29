@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GameTest < ActiveSupport::TestCase
+class GameStateTest < ActiveSupport::TestCase
   test 'should create a new ball and new frame' do
     game_state = GameState.new games(:empty)
     assert_difference ['Ball.count', 'Frame.count'], 1 do
