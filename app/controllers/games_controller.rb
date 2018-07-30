@@ -11,16 +11,15 @@ class GamesController < ApplicationController
   end
 
   def new_ball
-    if @game_state.new_ball params[:pins]
-      render json: @game_state, status: :created
+    if @game.new_ball params[:pins]
+      render json: @game, status: :created
     else
-      render json: @game_state.errors, status: :unprocessable_entity
+      render json: @game.errors, status: :unprocessable_entity
     end
   end
 
 private
   def set_game
     @game = Game.find params[:id] || params[:game_id]
-    @game_state = GameState.new @game
   end
 end
