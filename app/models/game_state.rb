@@ -1,6 +1,7 @@
 ##
 # The state of a game that can be completely created by the persisted data
 class GameState
+  include ActiveModel::Validations
 
   def initialize(game)
     @game = game

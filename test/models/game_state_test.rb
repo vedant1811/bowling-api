@@ -47,8 +47,7 @@ class GameStateTest < ActiveSupport::TestCase
   end
 
   test 'should not create a new ball nor new frame for completed game' do
-    game = nine_strikes_game
-    game.frames << open_frame
+    game = completed_game
     game_state = GameState.new game
 
     assert_no_difference ['Ball.count', 'Frame.count'] do
