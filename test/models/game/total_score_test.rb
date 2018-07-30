@@ -6,6 +6,13 @@ class TotalScoreTest < ActiveSupport::TestCase
     assert_nil game.total_score
   end
 
+  test 'score for 1 ball game' do
+    game = Game.new
+    game.new_ball 1
+    expected = []
+    assert_fame_scores game, expected
+  end
+
   test 'score for 1 open frame game' do
     game = Game.new
     game.frames << open_frame
@@ -17,6 +24,23 @@ class TotalScoreTest < ActiveSupport::TestCase
     game = Game.new
     game.frames << strike_frame
     expected = []
+    assert_fame_scores game, expected
+  end
+
+  test 'score for 1 spare frame game' do
+    game = Game.new
+    game.frames << spare_frame
+    game.save!
+    expected = []
+    assert_fame_scores game, expected
+  end
+
+  test 'score for 1 spare frame, 1 ball game' do
+    game = Game.new
+    game.frames << spare_frame
+    game.save!
+    game.new_ball 1
+    expected = [11]
     assert_fame_scores game, expected
   end
 
@@ -48,6 +72,15 @@ class TotalScoreTest < ActiveSupport::TestCase
     game.new_ball MAX_PINS
     game.new_ball MAX_PINS
     expected = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
+    assert_fame_scores game, expected
+  end
+
+  test 'score for 9 strikes, 1 spare game' do
+    game = nine_strikes_game
+    game.new_ball 9
+    game.new_ball 1 # spare
+    game.new_ball MAX_PINS
+    expected = [30, 60, 90, 120, 150, 180, 210, 239, 259, 279]
     assert_fame_scores game, expected
   end
 

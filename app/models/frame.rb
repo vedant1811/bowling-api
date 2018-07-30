@@ -25,7 +25,7 @@ class Frame < ApplicationRecord
 
   def spare?
     return false if balls.count < 2
-    balls.first.pins + balls.last.pins == MAX_PINS
+    balls.first.pins + balls.second.pins == MAX_PINS
   end
 
   def balls_total

@@ -27,10 +27,10 @@ private
     frames.each do |frame|
       current =
       if frame.strike?
-        next_n_balls_score(frame.balls.last, 2)&.+ 10
+        next_n_balls_score(frame.balls.first, 2)&.+ 10
       elsif frame.spare?
-        next_n_balls_score(frame.balls.last, 1)&.+ 10
-      else
+        next_n_balls_score(frame.balls.second, 1)&.+ 10
+      elsif frame.balls.size == 2
         frame.balls_total
       end
       break unless current

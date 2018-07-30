@@ -23,5 +23,14 @@ class FrameTest < ActiveSupport::TestCase
     frame.save!
 
     assert_equal MAX_PINS, frame.balls_total
+    assert frame.strike?
+  end
+
+  test 'should be spare' do
+    frame = spare_frame
+    frame.game = @game
+    frame.save!
+
+    assert frame.spare?
   end
 end
