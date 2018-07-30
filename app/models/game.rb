@@ -6,10 +6,14 @@ class Game < ApplicationRecord
 
   # @return false if game has finished, true otherwise
   def new_ball(pins)
-    frame = next_frame
-    return false unless frame
-    frame.balls.build pins: pins
-    frame.save
+    if frames.last&.incomplete?
+      frames.last.balls.create! pins: pins
+    elsif frames.count == 10
+      return false
+    else
+      frames << Frame.new(balls: [ Ball.new(pins: pins) ])
+    end
+    true
   end
 
   # can be +nil+
@@ -18,16 +22,6 @@ class Game < ApplicationRecord
   end
 
 private
-  def next_frame
-    if frames.last&.incomplete?
-      frames.last
-    elsif frames.count == 10
-      nil
-    else
-      Frame.new(game: self)
-    end
-  end
-
   def calculate_scores
     score = nil
     frames.each do |frame|

@@ -3,7 +3,7 @@ require 'test_helper'
 class NewBallTest < ActiveSupport::TestCase
   test 'should create a new ball and new frame' do
     game = games(:empty)
-    assert_difference ['Ball.count', 'Frame.count'], 1 do
+    assert_difference ['Ball.count', 'Frame.count', 'game.frames.size'], 1 do
       assert game.new_ball 1
     end
   end
@@ -19,7 +19,7 @@ class NewBallTest < ActiveSupport::TestCase
   test 'should create a new ball and new frame after strike' do
     game = games(:empty)
     game.frames << strike_frame
-    assert_difference ['Ball.count', 'Frame.count'], 1 do
+    assert_difference ['Ball.count', 'Frame.count', 'game.frames.size'], 1 do
       assert game.new_ball 1
     end
   end
@@ -38,7 +38,7 @@ class NewBallTest < ActiveSupport::TestCase
   test 'should create perfect score' do
     game = nine_strikes_game
 
-    assert_difference ->{ Ball.count } => 3, ->{ Frame.count } => 1 do
+    assert_difference ->{ Ball.count } => 3, ->{ Frame.count } => 1, ->{ game.frames.size } => 1 do
       assert game.new_ball MAX_PINS
       assert game.new_ball MAX_PINS
       assert game.new_ball MAX_PINS
