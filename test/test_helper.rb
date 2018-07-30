@@ -21,7 +21,7 @@ class ActiveSupport::TestCase
   end
 
   def strike_frame
-    Frame.new(balls: [ Ball.new(pins: 10) ])
+    Frame.new(balls: [ Ball.new(pins: MAX_PINS) ])
   end
 
   def open_frame
@@ -30,5 +30,13 @@ class ActiveSupport::TestCase
 
   def spare_frame
     Frame.new(balls: [ Ball.new(pins: 1), Ball.new(pins: 9) ])
+  end
+
+  def assert_nil_safe_equal(expected, actual)
+    if expected.nil?
+      assert_nil actual
+    else
+      assert_equal expected, actual
+    end
   end
 end

@@ -16,4 +16,12 @@ class FrameTest < ActiveSupport::TestCase
     frame = Frame.new
     refute frame.save
   end
+
+  test 'balls total should be correct' do
+    frame = strike_frame
+    frame.game = @game
+    frame.save!
+
+    assert_equal MAX_PINS, frame.balls_total
+  end
 end
