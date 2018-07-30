@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @game = games(:one)
+    @game = nine_strikes_game
   end
 
   test 'should create game' do

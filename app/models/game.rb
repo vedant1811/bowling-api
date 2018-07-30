@@ -11,6 +11,10 @@ class Game < ApplicationRecord
     frame.save
   end
 
+  def total_score
+    
+  end
+
 private
   def next_frame
     if frames.last&.incomplete?

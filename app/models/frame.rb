@@ -15,6 +15,10 @@ class Frame < ApplicationRecord
     !complete?
   end
 
+  def score
+    
+  end
+
 private
   def last?
     game.frames.count == 10
