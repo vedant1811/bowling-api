@@ -1,3 +1,4 @@
 class FrameSerializer < ActiveModel::Serializer
-  attributes :balls
+  attributes :score
+  has_many :balls
 end

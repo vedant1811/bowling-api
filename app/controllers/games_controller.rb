@@ -7,7 +7,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    render json: @game
+    render json: @game, include: 'frames,frames.balls'
   end
 
   def new_ball

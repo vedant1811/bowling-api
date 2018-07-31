@@ -18,6 +18,7 @@ class Game < ApplicationRecord
 
   # can be +nil+
   def total_score
+    # TODO: calcute scores in some other hook
     calculate_scores
   end
 
@@ -29,6 +30,7 @@ private
       if frame.strike?
         next_n_balls_score(frame.balls.first, 2)&.+ 10
       elsif frame.spare?
+        frame.balls.second.value = '/'
         next_n_balls_score(frame.balls.second, 1)&.+ 10
       elsif frame.balls.size == 2
         frame.balls_total
