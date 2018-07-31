@@ -33,4 +33,13 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
   end
+
+  test 'should not create ball for incorrect pins' do
+    game = @game
+    assert_no_difference 'Ball.count' do
+      post game_new_ball_url game, pins: 20
+    end
+
+    assert_response :unprocessable_entity
+  end
 end

@@ -10,16 +10,17 @@ class Game < ApplicationRecord
     includes(:frames, :balls)
   }
 
-  # @return false if game has finished, true otherwise
+  # @return array of errors. An empty array if no errors and record was saved
   def new_ball(pins)
+    ball = Ball.new pins: pins
     if frames.last&.incomplete?
-      frames.last.balls.create! pins: pins
+      frames.last.balls << ball
     elsif frames.to_a.count == 10
-      return false
+      return ['Game is completed']
     else
-      frames << Frame.new(balls: [ Ball.new(pins: pins) ])
+      frames << Frame.new(balls: [ ball ])
     end
-    true
+    ball.errors.to_a
   end
 
   # can be +nil+
