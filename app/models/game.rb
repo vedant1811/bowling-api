@@ -4,11 +4,17 @@ class Game < ApplicationRecord
   has_many :frames, inverse_of: :game
   has_many :balls, through: :frames
 
+  # load all frams and balls all the time
+  # on frames and balls, get count by +to_a.count+, otherwise SQL query SELECT COUNT(*) is executed
+  default_scope {
+    includes(:frames, :balls)
+  }
+
   # @return false if game has finished, true otherwise
   def new_ball(pins)
     if frames.last&.incomplete?
       frames.last.balls.create! pins: pins
-    elsif frames.count == 10
+    elsif frames.to_a.count == 10
       return false
     else
       frames << Frame.new(balls: [ Ball.new(pins: pins) ])

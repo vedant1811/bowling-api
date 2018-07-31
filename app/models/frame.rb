@@ -9,9 +9,9 @@ class Frame < ApplicationRecord
   def complete?
     if last?
       max = strike? || spare? ? 3 : 2
-      balls.count == max
+      balls.to_a.count == max
     else
-      strike? || balls.count == 2
+      strike? || balls.to_a.count == 2
     end
   end
 
@@ -24,7 +24,7 @@ class Frame < ApplicationRecord
   end
 
   def spare?
-    return false if balls.count < 2
+    return false if balls.to_a.count < 2
     balls.first.pins + balls.second.pins == MAX_PINS
   end
 
@@ -35,6 +35,6 @@ class Frame < ApplicationRecord
 private
   def last?
     # TODO: break the cyclic dependency and not call game methods
-    game.frames.count == 10
+    game.frames.to_a.count == 10
   end
 end
